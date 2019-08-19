@@ -81,9 +81,6 @@ func (module *KafkaCluster) Configure(name string, configRoot string) {
 func (module *KafkaCluster) Start() error {
 	module.Log.Info("starting")
 
-	module.Log.Info("starting with servers", module.servers)
-	module.Log.Info("starting with config",  module.saramaConfig)
-
 	// Connect Kafka client
 	client, err := sarama.NewClient(module.servers, module.saramaConfig)
 	if err != nil {
