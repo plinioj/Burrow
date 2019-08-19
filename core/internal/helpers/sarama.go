@@ -13,9 +13,7 @@ package helpers
 import (
 	"crypto/tls"
 	"crypto/x509"
-	"fmt"
 	"io/ioutil"
-	"os"
 
 	"github.com/Shopify/sarama"
 	"github.com/spf13/viper"
@@ -68,13 +66,8 @@ func parseKafkaVersion(kafkaVersion string) sarama.KafkaVersion {
 // client ID, TLS, and SASL configs. If there is any error in the configuration, such as a bad TLS certificate file,
 // this func will panic as it is normally called when configuring modules.
 func GetSaramaConfigFromClientProfile(profileName string) *sarama.Config {
-	fmt.Fprintln(os.Stderr,"Sarama Config on Error")
-	fmt.Println("Sarama Config")
-	fmt.Println(profileName)
-
 	// Set config root and defaults
 	configRoot := "client-profile." + profileName
-	fmt.Println(configRoot)
 
 	if (profileName != "") && (!viper.IsSet("client-profile." + profileName)) {
 		panic("unknown client-profile '" + profileName + "'")
@@ -123,7 +116,6 @@ func GetSaramaConfigFromClientProfile(profileName string) *sarama.Config {
 
 	// Configure SASL if enabled
 	if viper.IsSet(configRoot + ".sasl") {
-		fmt.Fprintln(os.Stderr, "Sarama Config has SASL")
 		saslName := viper.GetString(configRoot + ".sasl")
 
 		saramaConfig.Net.SASL.Enable = true
@@ -131,19 +123,14 @@ func GetSaramaConfigFromClientProfile(profileName string) *sarama.Config {
 		saramaConfig.Net.SASL.User = viper.GetString("sasl." + saslName + ".username")
 		saramaConfig.Net.SASL.Password = viper.GetString("sasl." + saslName + ".password")
 		algorithm := viper.GetString("sasl." + saslName + ".algorithm")
-		fmt.Println(algorithm)
-		fmt.Fprintln(os.Stderr, "Sarama Config has algorithm")
 		if algorithm == "sha512" {
 			saramaConfig.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA512} }
 			saramaConfig.Net.SASL.Mechanism = sarama.SASLMechanism(sarama.SASLTypeSCRAMSHA512)
 		} else if algorithm == "sha256" {
-			fmt.Fprintln(os.Stderr, "Sarama Config has algorithm 256")
 			saramaConfig.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA256} }
 			saramaConfig.Net.SASL.Mechanism = sarama.SASLMechanism(sarama.SASLTypeSCRAMSHA256)
 		}
 	}
-	fmt.Println("Sarama Config done")
-	fmt.Fprintln(os.Stderr, "Sarama Config Parsed")
 
 	return saramaConfig
 }
