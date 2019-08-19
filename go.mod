@@ -1,4 +1,4 @@
-module github.com/linkedin/Burrow
+module github.com/plinioj/Burrow
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect

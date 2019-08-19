@@ -13,7 +13,9 @@ package helpers
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"fmt"
 	"io/ioutil"
+	"os"
 
 	"github.com/Shopify/sarama"
 	"github.com/spf13/viper"
@@ -111,8 +113,11 @@ func GetSaramaConfigFromClientProfile(profileName string) *sarama.Config {
 		saramaConfig.Net.TLS.Config.InsecureSkipVerify = viper.GetBool("tls." + tlsName + ".noverify")
 	}
 
+
+
 	// Configure SASL if enabled
 	if viper.IsSet(configRoot + ".sasl") {
+		fmt.Fprintln(os.Stderr, "Sarama Config has SASL")
 		saslName := viper.GetString(configRoot + ".sasl")
 
 		saramaConfig.Net.SASL.Enable = true
@@ -120,14 +125,18 @@ func GetSaramaConfigFromClientProfile(profileName string) *sarama.Config {
 		saramaConfig.Net.SASL.User = viper.GetString("sasl." + saslName + ".username")
 		saramaConfig.Net.SASL.Password = viper.GetString("sasl." + saslName + ".password")
 		algorithm := viper.GetString("sasl." + saslName + ".algorithm")
+		fmt.Fprintln(os.Stderr, "Sarama Config has algorithm")
 		if algorithm == "sha512" {
 			saramaConfig.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA512} }
 			saramaConfig.Net.SASL.Mechanism = sarama.SASLMechanism(sarama.SASLTypeSCRAMSHA512)
 		} else if algorithm == "sha256" {
+			fmt.Fprintln(os.Stderr, "Sarama Config has algorithm 256")
 			saramaConfig.Net.SASL.SCRAMClientGeneratorFunc = func() sarama.SCRAMClient { return &XDGSCRAMClient{HashGeneratorFcn: SHA256} }
 			saramaConfig.Net.SASL.Mechanism = sarama.SASLMechanism(sarama.SASLTypeSCRAMSHA256)
 		}
 	}
+
+	fmt.Fprintln(os.Stderr, "Sarama Config Parsed")
 
 	return saramaConfig
 }
