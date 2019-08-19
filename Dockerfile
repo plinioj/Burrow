@@ -8,7 +8,7 @@ WORKDIR $BURROW_SRC
 RUN go mod tidy && go build -o /tmp/burrow .
 
 FROM iron/go
-LABEL maintainer="LinkedIn Burrow https://github.com/linkedin/Burrow"
+LABEL maintainer="LinkedIn Burrow https://github.com/plinioj/Burrow"
 
 WORKDIR /app
 COPY --from=builder /tmp/burrow /app/

@@ -11,7 +11,7 @@
 package helpers
 
 import (
-	"github.com/linkedin/Burrow/core/protocol"
+	"github.com/plinioj/Burrow/core/protocol"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -1,8 +1,8 @@
 [![Join the chat at https://gitter.im/linkedin-Burrow/Lobby](https://badges.gitter.im/linkedin-Burrow/Lobby.svg)](https://gitter.im/linkedin-Burrow/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/linkedin/Burrow.svg)](https://travis-ci.org/linkedin/Burrow)
-[![go report card](https://goreportcard.com/badge/github.com/linkedin/Burrow)](https://goreportcard.com/report/github.com/linkedin/Burrow)
+[![go report card](https://goreportcard.com/badge/github.com/plinioj/Burrow)](https://goreportcard.com/report/github.com/plinioj/Burrow)
 [![Coverage Status](https://coveralls.io/repos/github/linkedin/Burrow/badge.svg?branch=master)](https://coveralls.io/github/linkedin/Burrow?branch=master)
-[![GoDoc](https://godoc.org/github.com/linkedin/Burrow?status.svg)](https://godoc.org/github.com/linkedin/Burrow)
+[![GoDoc](https://godoc.org/github.com/plinioj/Burrow?status.svg)](https://godoc.org/github.com/plinioj/Burrow)
 
 # Burrow - Kafka Consumer Lag Checking
 
@@ -26,7 +26,7 @@ are managed using Go module, the lowest version of Go supported is 1.11, though 
 
 ### Build and Install
 ```
-$ Clone github.com/linkedin/Burrow to a directory outside of $GOPATH. Alternatively, you can export GO111MODULE=on to enable Go module.
+$ Clone github.com/plinioj/Burrow to a directory outside of $GOPATH. Alternatively, you can export GO111MODULE=on to enable Go module.
 $ cd to the source directory.
 $ go mod tidy
 $ go install
@@ -59,7 +59,7 @@ Install [Docker Compose](https://docs.docker.com/compose/) and then:
 
 
 ### Configuration
-For information on how to write your configuration file, check out the [detailed wiki](https://github.com/linkedin/Burrow/wiki)
+For information on how to write your configuration file, check out the [detailed wiki](https://github.com/plinioj/Burrow/wiki)
 
 ## License
 Copyright 2017 LinkedIn Corp. Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
